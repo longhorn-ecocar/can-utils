@@ -47,6 +47,8 @@
 
 #include <stdint.h>
 
+namespace can {
+
 typedef int32_t __s32;
 typedef uint32_t __u32;
 typedef uint8_t __u8;
@@ -266,5 +268,7 @@ struct can_filter {
 
 #define CAN_INV_FILTER 0x20000000U /* to be set in can_filter.can_id */
 #define CAN_RAW_FILTER_MAX 512 /* maximum number of can_filter set via setsockopt() */
+
+}
 
 #endif /* CAN_KERNEL_H */

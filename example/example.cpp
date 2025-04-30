@@ -8,6 +8,8 @@
 #include "dbc/dbc_parser.h"
 #include "v2c/v2c_transcoder.h"
 
+using can::can_frame;
+
 std::string read_file(const std::string& dbc_path) {
 	std::ifstream dbc_content(dbc_path);
 	std::ostringstream ss;
