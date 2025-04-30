@@ -50,7 +50,7 @@ int main() {
 
 	auto start = std::chrono::system_clock::now();
 
-	bool parsed = can::parse_dbc(read_file("example/example.dbc"), std::ref(transcoder));
+	bool parsed = can::parse_dbc(read_file("src/external/can-utils/example/example.dbc"), std::ref(transcoder));
 	if (!parsed)
 		return 1;
 

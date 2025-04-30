@@ -1,7 +1,9 @@
 #pragma once
 
+#include <boost/endian/arithmetic.hpp>   // <-- already in your file
+#include <boost/endian/conversion.hpp>   // little_to_native / big_to_native
+#include <cstring>                       // std::memcpy
 
-#include <boost/endian.hpp>
 #include <variant>
 #include <string>
 
@@ -31,8 +33,13 @@ public:
 	}
 
 	uint64_t operator()(const uint8_t* data) const {
-		uint64_t val = _byte_order == order::little ?
-			boost::endian::load_little_u64(data + _byte_pos) : boost::endian::load_big_u64(data + _byte_pos);
+		uint64_t val;
+		std::memcpy(&val, data + _byte_pos, sizeof(val));     // raw copy
+		if (_byte_order == order::little)
+		    val = boost::endian::little_to_native(val);       // adjust to host order
+		else
+		    val = boost::endian::big_to_native   (val);
+			
 
 		if (_nbytes > 8) {
 			uint64_t ninth_byte = data[_byte_pos + 8];

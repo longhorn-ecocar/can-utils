@@ -60,15 +60,15 @@ struct lazy_type : x3::parser<lazy_type<Tag>> {
 template <typename T>
 constexpr auto lazy = lazy_type<T>{};
 
-constexpr auto skipper_ = x3::lexeme[
+const auto skipper_ = x3::lexeme[
 	x3::blank |
 		"//" >> *(x3::char_ - x3::eol) |
 		("/*" >> *(x3::char_ - "*/")) >> "*/"
 ];
 
-constexpr auto end_cmd_ = x3::omit[*x3::eol];
+const auto end_cmd_ = x3::omit[*x3::eol];
 
-constexpr auto od(char c) {
+const auto od(char c) {
 	return x3::omit[x3::char_(c)];
 }
 
@@ -81,7 +81,7 @@ const auto quoted_name_ = as<std::string>(
 );
 
 static std::string_view skip_blines(std::string_view rng) {
-	constexpr auto eols_ = x3::omit[+x3::eol];
+	const auto eols_ = x3::omit[+x3::eol];
 	auto iter = rng.begin();
 	phrase_parse(iter, rng.end(), eols_, skipper_);
 	return { iter, rng.end() };
